@@ -1,0 +1,31 @@
+<div style="max-width:600px; margin:20px auto; background:#fff; padding:15px; border-radius:6px;">
+  <h3>رفع صورة جديدة</h3>
+  <input type="file" id="imageInput" accept="image/*" />
+  <button onclick="uploadPost()">رفع</button>
+</div>
+
+<script>
+  function uploadPost() {
+    const input = document.getElementById('imageInput');
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        let posts = JSON.parse(localStorage.getItem('posts') || '[]');
+        let newPost = {
+          id: Date.now(),
+          username: localStorage.getItem('loggedInUser'),
+          image: e.target.result,
+          likes: 0,
+          userImage: 'https://randomuser.me/api/portraits/lego/1.jpg'
+        };
+        posts.unshift(newPost);
+        localStorage.setItem('posts', JSON.stringify(posts));
+        alert('تم رفع الصورة بنجاح');
+        window.location.reload(); // إعادة تحميل الصفحة لعرض المنشور
+      }
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      alert('اختار صورة أولاً');
+    }
+  }
+</script>
