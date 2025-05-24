@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>الملف الشخصي</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#fafafa; margin:0; padding:20px; }
+  .profile-header { max-width: 600px; margin: 0 auto 20px; background: white; padding: 20px; border-radius: 6px; text-align: center; }
+  .profile-header img { width: 120px; height: 120px; border-radius: 50%; }
+  .profile-header h2 { margin: 10px 0; }
+  .posts { max-width: 600px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .posts img { width: 100%; border-radius: 6px; }
+  #logout { cursor: pointer; color: #0095f6; border: none; background: none; font-size: 16px; position: fixed; top: 20px; right: 20px; }
+</style>
+</head>
+<body>
+
+<button id="logout
