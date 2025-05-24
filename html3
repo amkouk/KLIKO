@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>تسجيل الدخول والتسجيل</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#fafafa; }
+  .container { max-width: 400px; margin: 50px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc;}
+  input, button { width: 100%; padding: 10px; margin: 10px 0; }
+  button { background: #0095f6; border: none; color: white; cursor: pointer; }
+  .tab { cursor: pointer; color: #0095f6; text-align: center; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div id="loginForm">
+    <h2>تسجيل الدخول</h2>
+    <input type="text" id="loginUsername" placeholder="اسم المستخدم" required />
+    <input type="password" id="loginPassword" placeholder="كلمة السر" required />
+    <button onclick="login()">دخول</button>
+    <div class="tab" onclick="showRegister()">ليس لديك حساب؟ سجل الآن</div>
+  </div>
+
+  <div id="registerForm" style="display:none;">
+    <h2>التسجيل</h2>
+    <input type="text" id="regUsername" placeholder="اسم المستخدم" required />
+    <input type="password" id="regPassword" placeholder="كلمة السر" required />
+    <button onclick="register()">تسجيل</button>
+    <div class="tab" onclick="showLogin()">لديك حساب؟ تسجيل الدخول</div>
+  </div>
+</div>
+
+<script>
+  function showRegister() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+  }
+  function showLogin() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+  }
+
+  function register() {
+    const username = document.getElementById('regUsername').value.trim();
+    const password = document.getElementById('regPassword').value;
+    if (!username || !password) return alert('عمر جميع الحقول');
+
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    if (users.find(u => u.username === username)) {
+      return alert('اسم المستخدم موجود من قبل');
+    }
+    users.push({username, password});
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('تم التسجيل بنجاح، الآن يمكنك تسجيل الدخول');
+    showLogin();
+  }
+
+  function login() {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    let user = users.find(u => u.username === username && u.password === password);
+    if (user) {
+      localStorage.setItem('loggedInUser', username);
+      alert('تم تسجيل الدخول بنجاح');
+      window.location.href = 'feed.html'; // توجه لصفحة Feed
+    } else {
+      alert('اسم المستخدم أو كلمة السر غير صحيحة');
+    }
+  }
+</script>
+
+</body>
+</html>
